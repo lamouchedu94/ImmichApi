@@ -80,6 +80,10 @@ func main() {
 	//"nNAFwdkBDGQyVbxl7QIa91aSDMY4UgUoOOjmr0NEtug"
 
 	local_assets, err := s.get_Local_Assets()
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	i := 0
 	var list []string
 	for local := range local_assets {
@@ -98,33 +102,45 @@ func main() {
 	for {
 		fmt.Println("(Delete", len(list), "files ? (y or n)")
 		fmt.Scanln(&rep)
-
 		if rep == "n" {
 			break
 		} else if rep == "y" {
-			for {
-				fmt.Println("Do you want move", len(list), "files to another location before deleting ? (y or n)")
-				fmt.Scanln(&rep)
-				if rep == "y" {
-					for i, img := range list {
-
-						final_path, err := s.move(img)
-						fmt.Printf("%s -> %s   %d/%d\n", img, final_path, i, len(list))
-						if err != nil {
-							fmt.Println(err)
-						}
-					}
-					remove_image(list)
-					fmt.Println("Finnish.")
-					return
-				} else if rep == "n" {
-					remove_image(list)
-					fmt.Println("Finnish.")
-					return
-				}
-			}
+			remove_image(list)
+			fmt.Println("Finnish.")
+			return
 		}
 	}
+
+	// for {
+	// 	fmt.Println("(Delete", len(list), "files ? (y or n)")
+	// 	fmt.Scanln(&rep)
+
+	// 	if rep == "n" {
+	// 		break
+	// 	} else if rep == "y" {
+	// 		for {
+	// 			fmt.Println("Do you want move", len(list), "files to another location before deleting ? (y or n)")
+	// 			fmt.Scanln(&rep)
+	// 			if rep == "y" {
+	// 				for i, img := range list {
+
+	// 					final_path, err := s.move(img)
+	// 					fmt.Printf("%s -> %s   %d/%d\n", img, final_path, i, len(list))
+	// 					if err != nil {
+	// 						fmt.Println(err)
+	// 					}
+	// 				}
+	// 				remove_image(list)
+	// 				fmt.Println("Finnish.")
+	// 				return
+	// 			} else if rep == "n" {
+	// 				remove_image(list)
+	// 				fmt.Println("Finnish.")
+	// 				return
+	// 			}
+	// 		}
+	// 	}
+	// }
 
 }
 
